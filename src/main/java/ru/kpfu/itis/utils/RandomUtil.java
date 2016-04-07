@@ -1,4 +1,4 @@
-package ru.kpfu.itis.utils.generator;
+package ru.kpfu.itis.utils;
 
 import org.apache.commons.math3.random.RandomDataGenerator;
 

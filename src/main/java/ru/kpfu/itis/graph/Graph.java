@@ -19,8 +19,8 @@ public interface Graph {
      */
     List<Edge> getIncidenceEdges(int vertex);
 
-    //TODO use Collections.sort(list)
     List<Edge> getSortedIncidenceEdges(int vertex);
 
+    boolean addEdge(int s, int e, Double weight);
 
 }

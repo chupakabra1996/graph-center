@@ -64,4 +64,11 @@ public class AdjacentMatrixGraph implements Graph {
 
         return result;
     }
+
+
+    @Override
+    public boolean addEdge(int s, int e, Double weight) {
+        return false;
+    }
+
 }
