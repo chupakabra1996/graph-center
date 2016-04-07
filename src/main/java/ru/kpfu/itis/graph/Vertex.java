@@ -5,8 +5,8 @@ public class Vertex {
     private int id;
 
     public Vertex(int id) {
-        if (id <= 0){
-            throw new IllegalArgumentException("Vertex's id must be greater than zero.");
+        if (id < 0){
+            throw new IllegalArgumentException("Vertex's id must be greater than -1.");
         }
         this.id = id;
     }
