@@ -83,4 +83,10 @@ public class Edge {
         result = 31 * result + (weight != null ? weight.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "| firstVertex = " + firstVertex.toString() + ", secondVertex = " + secondVertex.toString()
+                + ", weight = " + weight + " |";
+    }
 }

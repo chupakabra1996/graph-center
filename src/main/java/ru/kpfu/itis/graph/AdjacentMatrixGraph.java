@@ -8,12 +8,22 @@ public class AdjacentMatrixGraph implements Graph {
 
     private int vertexCount;
 
+    private boolean isEmpty;
+
     private Double[][] adjacentMatrix;
 
     public AdjacentMatrixGraph(int vertexCount) {
 
         this.vertexCount = vertexCount;
         adjacentMatrix = new Double[vertexCount][vertexCount];
+
+        for (int i = 0; i < vertexCount; i++) {
+            for (int j = 0; j < vertexCount; j++) {
+                adjacentMatrix[i][j] = Double.POSITIVE_INFINITY;
+            }
+        }
+
+        isEmpty = true;
     }
 
     @Override
@@ -66,8 +76,57 @@ public class AdjacentMatrixGraph implements Graph {
     }
 
 
+    private boolean contains(int s, int e){
+        for (int i = 0; i < vertexCount; i++) {
+            for (int j = 0; j < vertexCount; j++) {
+                if (adjacentMatrix[e][i] != Double.POSITIVE_INFINITY
+                        || adjacentMatrix[s][i] != Double.POSITIVE_INFINITY){
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    public void  print(){
+        for (int i = 0; i < vertexCount; i++) {
+            for (int j = 0; j < vertexCount; j++) {
+                System.out.print(adjacentMatrix[i][j]+", ");
+            }
+            System.out.println();
+        }
+    }
+
+
     @Override
     public boolean addEdge(int s, int e, Double weight) {
+
+        if (weight == Double.POSITIVE_INFINITY) {
+            return false;
+        }
+
+        if (s == e){
+            return false;
+        }
+
+        if (adjacentMatrix[s][e] == Double.POSITIVE_INFINITY) {
+
+            if (isEmpty){
+                isEmpty = false;
+                adjacentMatrix[s][e] = weight;
+                adjacentMatrix[e][s] = weight;
+                return true;
+            }
+
+            if (contains(s,e)){
+
+                adjacentMatrix[s][e] = weight;
+                adjacentMatrix[e][s] = weight;
+
+                return true;
+            }
+        }
+
         return false;
     }
 
