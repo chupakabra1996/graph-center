@@ -4,30 +4,34 @@ import java.util.*;
 
 public class AdjacentListGraph implements Graph {
 
+    private int capacity;
+
     private int vertexCount;
+    private int edgeCount;
+
     private boolean isEmpty;
 
     private Map<Integer, List<Vertex>> adjacentList;
     private Map<Integer, List<Edge>> edgesWeightList;
 
-    public AdjacentListGraph(int vertexCount) {
-        if (vertexCount <= 0) {
+    public AdjacentListGraph(int capacity) {
+        if (capacity <= 0) {
             throw new IllegalArgumentException("Graph must contain at least 1 vertex");
         }
-        this.vertexCount = vertexCount;
-        adjacentList = new HashMap<>(vertexCount);
-        edgesWeightList = new HashMap<>(vertexCount);
+        this.capacity = capacity;
+        adjacentList = new HashMap<>(capacity);
+        edgesWeightList = new HashMap<>(capacity);
+
+        vertexCount = 0;
+        edgeCount = 0;
 
         isEmpty = true;
     }
 
-    public int getVertexCount() {
-        return vertexCount;
-    }
 
     @Override
     public List<Integer> getAdjacentVertices(int vertex) {
-        if (vertexCount > vertex) {
+        if (capacity > vertex) {
             List<Vertex> tmp = adjacentList.get(vertex);
             if (tmp == null) {
                 return new ArrayList<>(0);
@@ -43,7 +47,7 @@ public class AdjacentListGraph implements Graph {
 
     @Override
     public List<Edge> getIncidenceEdges(int vertex) {
-        if (vertexCount > vertex) {
+        if (capacity > vertex) {
             List<Edge> result = edgesWeightList.get(vertex);
             return result == null ? new ArrayList<>(0) : result;
         }
@@ -59,6 +63,11 @@ public class AdjacentListGraph implements Graph {
 
     @Override
     public boolean addEdge(int s, int e, Double weight) {
+
+        if (s >= capacity || e >= capacity){
+            return false;
+        }
+
         if (weight == Double.POSITIVE_INFINITY || weight <= 0) {
             return false;
         }
@@ -69,38 +78,50 @@ public class AdjacentListGraph implements Graph {
 
         if (isEmpty) {
 
-            adjacentList.put(s, new ArrayList<>());
-            adjacentList.put(e, new ArrayList<>());
+            adjacentList.put(s, new LinkedList<>());
+            adjacentList.put(e, new LinkedList<>());
 
             adjacentList.get(s).add(new Vertex(e));
             adjacentList.get(e).add(new Vertex(s));
 
 
-            edgesWeightList.put(e, new ArrayList<>());
-            edgesWeightList.put(s, new ArrayList<>());
+            edgesWeightList.put(e, new LinkedList<>());
+            edgesWeightList.put(s, new LinkedList<>());
 
             edgesWeightList.get(s).add(new Edge(s, e, weight));
             edgesWeightList.get(e).add(new Edge(s, e, weight));
+
+            edgeCount++;
+            vertexCount += 2;
 
             isEmpty = false;
 
             return true;
         }
 
-        if (adjacentList.containsKey(s) || adjacentList.containsKey(e)) {
+
+        boolean containS = adjacentList.containsKey(s);
+        boolean containE = adjacentList.containsKey(e);
+
+        if (containS || containE) {
 
             if (adjacentList.get(s) == null) {
-                edgesWeightList.put(s, new ArrayList<>());
-                adjacentList.put(s, new ArrayList<>());
+                edgesWeightList.put(s, new LinkedList<>());
+                adjacentList.put(s, new LinkedList<>());
             }
 
 
             if (adjacentList.get(e) == null) {
-                edgesWeightList.put(e, new ArrayList<>());
-                adjacentList.put(e, new ArrayList<>());
+                edgesWeightList.put(e, new LinkedList<>());
+                adjacentList.put(e, new LinkedList<>());
             }
 
+
             if (!adjacentList.get(s).contains(new Vertex(e))) {
+
+                if (!containS || !containE) {
+                    vertexCount++;
+                }
 
                 adjacentList.get(s).add(new Vertex(e));
                 adjacentList.get(e).add(new Vertex(s));
@@ -108,12 +129,34 @@ public class AdjacentListGraph implements Graph {
                 edgesWeightList.get(s).add(new Edge(s, e, weight));
                 edgesWeightList.get(e).add(new Edge(s, e, weight));
 
+                edgeCount++;
+
                 return true;
             }
 
         }
 
         return false;
+    }
+
+    @Override
+    public int getVertexCount() {
+        return vertexCount;
+    }
+
+    @Override
+    public int getEdgeCount() {
+        return edgeCount;
+    }
+
+    @Override
+    public int getCapacity() {
+        return capacity;
+    }
+
+    @Override
+    public void print() {
+
     }
 
 }

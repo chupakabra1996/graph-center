@@ -9,6 +9,6 @@ public interface GraphGenerator {
      *
      * @return Graph
      */
-    Graph generateGraph(int vertexCount);
+    Graph generateGraph();
 
 }

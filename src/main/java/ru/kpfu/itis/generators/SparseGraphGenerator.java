@@ -5,7 +5,7 @@ import ru.kpfu.itis.graph.Graph;
 public class SparseGraphGenerator implements GraphGenerator {
 
     @Override
-    public Graph generateGraph(int vertexCount) {
+    public Graph generateGraph() {
         return null;
     }
 }
