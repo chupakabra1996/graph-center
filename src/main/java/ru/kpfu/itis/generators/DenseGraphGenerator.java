@@ -4,9 +4,12 @@ import ru.kpfu.itis.graph.AdjacentMatrixGraph;
 import ru.kpfu.itis.graph.Graph;
 import ru.kpfu.itis.utils.RandomUtil;
 
+import java.util.Random;
+
 public class DenseGraphGenerator implements GraphGenerator {
 
     private final static double MIN_DENSE = 0.8;
+    private final static double MAX_EDGE_WEIGHT = 36.6;
 
     private Graph graph;
 
@@ -25,15 +28,24 @@ public class DenseGraphGenerator implements GraphGenerator {
 
         double dense = 0;
 
-        while (dense <= MIN_DENSE) {
+        Random random = new Random(randomUtil.nextInt(Integer.MAX_VALUE));
+
+        //dense between MIN_DENSE and 1
+        double d = random.nextDouble() * (1 - MIN_DENSE) + MIN_DENSE;
+
+        System.out.println(d);
+
+        while (dense <= d) {
 
             int s = randomUtil.nextInt(vertexCount);
             int e = randomUtil.nextInt(vertexCount);
-            double weight = randomUtil.nextDouble(36.6);
 
-            graph.addEdge(s, e, weight);
+            double weight = randomUtil.nextDouble(MAX_EDGE_WEIGHT);
 
-            dense = computeDense(graph.getCapacity(),graph.getEdgeCount());
+            if (graph.addEdge(s, e, weight)) {
+                dense = computeDense(graph.getCapacity(), graph.getEdgeCount());
+            }
+
         }
 
         return graph;
@@ -41,10 +53,7 @@ public class DenseGraphGenerator implements GraphGenerator {
 
 
     private double computeDense(int vertices, int edges) {
-        if (vertices == 0 || vertices == 1){
-            return 0;
-        }
-        return (2 * edges) / (vertices * (vertices - 1));
+        return (2 * edges) / (double)(vertices * (vertices - 1));
     }
 
 }

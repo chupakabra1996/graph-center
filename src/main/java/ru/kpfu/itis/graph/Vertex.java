@@ -1,6 +1,8 @@
 package ru.kpfu.itis.graph;
 
-public class Vertex {
+import java.io.Serializable;
+
+public class Vertex implements Serializable {
 
     private int id;
 

@@ -1,8 +1,9 @@
 package ru.kpfu.itis.graph;
 
+import java.io.Serializable;
 import java.util.List;
 
-public interface Graph {
+public interface Graph extends Serializable {
 
     /**
      * Adjacent vertices to vertex

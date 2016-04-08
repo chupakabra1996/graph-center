@@ -4,15 +4,14 @@ import java.util.*;
 
 public class AdjacentListGraph implements Graph {
 
-    private int capacity;
-
-    private int vertexCount;
-    private int edgeCount;
-
-    private boolean isEmpty;
+    private static final long serialVersionUID = -2258097606728923075L;
 
     private Map<Integer, List<Vertex>> adjacentList;
-    private Map<Integer, List<Edge>> edgesWeightList;
+
+    private int capacity;
+    private int vertexCount;
+    private int edgeCount;
+    private transient boolean isEmpty;    private Map<Integer, List<Edge>> edgesWeightList;
 
     public AdjacentListGraph(int capacity) {
         if (capacity <= 0) {
@@ -64,7 +63,7 @@ public class AdjacentListGraph implements Graph {
     @Override
     public boolean addEdge(int s, int e, Double weight) {
 
-        if (s >= capacity || e >= capacity){
+        if (s >= capacity || e >= capacity) {
             return false;
         }
 

@@ -6,12 +6,14 @@ import java.util.List;
 
 public class AdjacentMatrixGraph implements Graph {
 
+    private static final long serialVersionUID = 2064868641859661123L;
+
     private int capacity;
 
     private int vertexCount;
     private int edgeCount;
 
-    private boolean isEmpty;
+    private transient boolean isEmpty;
 
     private Double[][] adjacentMatrix;
 
@@ -92,13 +94,31 @@ public class AdjacentMatrixGraph implements Graph {
     }
 
     public void print() {
+
         for (int i = 0; i < capacity; i++) {
+
+            if (i == 0) {
+                System.out.printf("%3s","");
+                for (int j = 0; j < capacity; j++) {
+
+                    System.out.printf("%10s", j);
+                }
+                System.out.println("\n");
+
+            }
+
             for (int j = 0; j < capacity; j++) {
+
+                if (j == 0) {
+                    System.out.printf("%3s", i);
+                }
+
                 if (adjacentMatrix[i][j] == Double.POSITIVE_INFINITY) {
-                    System.out.print("\tINF\t");
+                    System.out.printf("%10s", "inf");
                     continue;
                 }
-                System.out.print("\t" + adjacentMatrix[i][j] + "\t");
+
+                System.out.printf("%10.0f", adjacentMatrix[i][j]);
             }
             System.out.println();
         }
@@ -108,7 +128,7 @@ public class AdjacentMatrixGraph implements Graph {
     @Override
     public boolean addEdge(int s, int e, Double weight) {
 
-        if (s >= capacity || e >= capacity){
+        if (s >= capacity || e >= capacity) {
             return false;
         }
 
@@ -139,7 +159,7 @@ public class AdjacentMatrixGraph implements Graph {
 
             if (containsS || containsE) {
 
-                if (!containsS || !containsE){
+                if (!containsS || !containsE) {
                     vertexCount++;
                 }
 

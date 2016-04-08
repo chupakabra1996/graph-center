@@ -1,8 +1,9 @@
 package ru.kpfu.itis.graph;
 
+import java.io.Serializable;
 import java.util.Comparator;
 
-public class Edge {
+public class Edge implements Serializable {
 
     private Vertex firstVertex;
 
