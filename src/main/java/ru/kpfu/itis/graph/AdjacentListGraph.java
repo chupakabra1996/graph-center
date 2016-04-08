@@ -156,6 +156,25 @@ public class AdjacentListGraph implements Graph {
     @Override
     public void print() {
 
-    }
+        for (int i = 0; i < capacity; i++) {
 
+            if (i == 0) {
+                System.out.printf("%3s","");
+                for (int j = 0; j < capacity; j++) {
+
+                    System.out.printf("%10s", j);
+                }
+                System.out.println("\n");
+
+            }
+
+            for (int j = 0; j < capacity; j++) {
+
+                if (j == 0) {
+                    System.out.printf("%3s", i);
+                }
+            }
+            System.out.println();
+        }
+    }
 }

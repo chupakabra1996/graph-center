@@ -1,6 +1,6 @@
 package ru.kpfu.itis.utils;
 
-import ru.kpfu.itis.generators.DenseGraphGenerator;
+import ru.kpfu.itis.generators.SimpleGraphGenerator;
 import ru.kpfu.itis.generators.GraphGenerator;
 import ru.kpfu.itis.graph.Graph;
 
@@ -9,6 +9,7 @@ import java.net.URL;
 
 public class GraphUtils {
 
+    public static final double MAX_EDGE_WEIGHT = 126;
 
     /**
      * Generates a graph
@@ -63,29 +64,43 @@ public class GraphUtils {
         return null;
     }
 
-    public static File getFileFromResources(String fileName) {
+    public static File getFileFromResources(String fileName, Graph g) {
 
         if (fileName == null) {
             return null;
         }
 
-        URL urlPath = fileName.getClass().getClassLoader().getResource(fileName);
+        URL urlPath = g.getClass().getClassLoader().getResource(fileName);
 
         if (urlPath != null) {
-            return new File(urlPath.getFile());
+            return new File(urlPath.getPath());
         }
 
         return null;
     }
 
 
+    public static File getFile(String fileName){
+        if (fileName == null){
+            return null;
+        }
+
+        return new File("src/resources/"+fileName);
+    }
+
+
     public static void main(String[] args) {
 
-        GraphGenerator graphGenerator = new DenseGraphGenerator(10);
+        GraphGenerator graphGenerator = new SimpleGraphGenerator(10, SimpleGraphGenerator.GraphType.SPARSE);
         Graph g = GraphUtils.generateGraph(graphGenerator);
 
-        writeGraph(getFileFromResources("graph10.ser"), g);
+        g.print();
+//        writeGraph(getFile("graph100.ser"), g);
 
+
+//        Graph g2 = readGraph(getFileFromResources("graph10.ser",g));
+//
+//        System.out.println(g2.getEdgeCount() + ',' + g2.getVertexCount() + ", " + g2.getCapacity());
     }
 
 }
