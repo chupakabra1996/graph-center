@@ -11,4 +11,7 @@ public interface GraphGenerator {
      */
     Graph generateGraph();
 
+
+    void setGraphType(SimpleGraphGenerator.GraphType graphType);
+
 }
