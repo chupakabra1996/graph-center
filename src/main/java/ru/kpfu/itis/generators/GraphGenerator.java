@@ -1,6 +1,6 @@
 package ru.kpfu.itis.generators;
 
-import ru.kpfu.itis.graph.Graph;
+import ru.kpfu.itis.graph.AdjacentMatrixGraph;
 
 public interface GraphGenerator {
 
@@ -9,8 +9,7 @@ public interface GraphGenerator {
      *
      * @return Graph
      */
-    Graph generateGraph();
-
+    AdjacentMatrixGraph generateGraph();
 
     void setGraphType(SimpleGraphGenerator.GraphType graphType);
 

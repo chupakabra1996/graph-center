@@ -1,10 +1,11 @@
 package ru.kpfu.itis.graph;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-public class AdjacentMatrixGraph implements Graph {
+public class AdjacentMatrixGraph implements Serializable{
 
     private static final long serialVersionUID = 2064868641859661123L;
 
@@ -34,7 +35,6 @@ public class AdjacentMatrixGraph implements Graph {
         isEmpty = true;
     }
 
-    @Override
     public List<Integer> getAdjacentVertices(int vertex) {
 
         if (capacity > vertex) {
@@ -53,7 +53,6 @@ public class AdjacentMatrixGraph implements Graph {
         return new ArrayList<>(0);
     }
 
-    @Override
     public List<Edge> getIncidenceEdges(int vertex) {
 
         if (capacity > vertex) {
@@ -73,7 +72,6 @@ public class AdjacentMatrixGraph implements Graph {
         return new ArrayList<>(0);
     }
 
-    @Override
     public List<Edge> getSortedIncidenceEdges(int vertex) {
 
         List<Edge> result = getIncidenceEdges(vertex);
@@ -125,7 +123,6 @@ public class AdjacentMatrixGraph implements Graph {
     }
 
 
-    @Override
     public boolean addEdge(int s, int e, Double weight) {
 
         if (s >= capacity || e >= capacity) {
@@ -175,17 +172,14 @@ public class AdjacentMatrixGraph implements Graph {
         return false;
     }
 
-    @Override
     public int getVertexCount() {
         return vertexCount;
     }
 
-    @Override
     public int getEdgeCount() {
         return edgeCount;
     }
 
-    @Override
     public int getCapacity() {
         return capacity;
     }

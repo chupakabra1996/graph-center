@@ -1,6 +1,6 @@
 package ru.kpfu.itis.utils;
 
-import ru.kpfu.itis.graph.Graph;
+import ru.kpfu.itis.graph.AdjacentMatrixGraph;
 
 import java.io.*;
 import java.net.URL;
@@ -8,7 +8,7 @@ import java.net.URL;
 public class GraphUtils {
 
 
-    public static void writeGraph(File file, Graph g) {
+    public static void writeGraph(File file, AdjacentMatrixGraph g) {
         if (file != null && file.exists() && file.canWrite() && g != null) {
 
             try (BufferedOutputStream bOs = new BufferedOutputStream(new FileOutputStream(file))) {
@@ -28,7 +28,7 @@ public class GraphUtils {
     }
 
 
-    public static Graph readGraph(File file) {
+    public static AdjacentMatrixGraph readGraph(File file) {
 
         if (file != null && file.exists() && file.canRead()) {
 
@@ -36,7 +36,7 @@ public class GraphUtils {
 
                 try (ObjectInputStream ois = new ObjectInputStream(bIn)) {
 
-                    return (Graph) ois.readObject();
+                    return (AdjacentMatrixGraph) ois.readObject();
 
                 } catch (ClassNotFoundException e) {
                     e.printStackTrace();
@@ -50,7 +50,7 @@ public class GraphUtils {
         return null;
     }
 
-    public static File getFileFromResources(String fileName, Graph g) {
+    public static File getFileFromResources(String fileName, AdjacentMatrixGraph g) {
 
         if (fileName == null) {
             return null;

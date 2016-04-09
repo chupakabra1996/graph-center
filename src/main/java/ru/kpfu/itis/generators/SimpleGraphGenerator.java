@@ -1,8 +1,6 @@
 package ru.kpfu.itis.generators;
 
-import ru.kpfu.itis.graph.AdjacentListGraph;
 import ru.kpfu.itis.graph.AdjacentMatrixGraph;
-import ru.kpfu.itis.graph.Graph;
 import ru.kpfu.itis.utils.RandomUtil;
 
 import java.util.Random;
@@ -15,7 +13,7 @@ public class SimpleGraphGenerator implements GraphGenerator {
 
     private final static double MAX_EDGE_WEIGHT = 126.6;
 
-    private Graph graph;
+    private AdjacentMatrixGraph graph;
     private int capacity;
 
     private RandomUtil randomUtil;
@@ -31,16 +29,15 @@ public class SimpleGraphGenerator implements GraphGenerator {
         if (graphType == GraphType.DENSE) {
             graph = new AdjacentMatrixGraph(capacity);
         } else {
-            graph = new AdjacentListGraph(capacity);
+            graph = new AdjacentMatrixGraph(capacity);
         }
 
         randomUtil = new RandomUtil();
         this.capacity = capacity;
-        this.graphType = graphType;
     }
 
     @Override
-    public Graph generateGraph() {
+    public AdjacentMatrixGraph generateGraph() {
 
         double dense = 0;
 
