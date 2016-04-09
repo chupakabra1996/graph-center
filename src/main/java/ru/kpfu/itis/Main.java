@@ -45,10 +45,14 @@ public class Main {
         //выводим какую-нибудь инфу о графе
         System.out.println(graph.getEdgeCount());
 
+        graph.print();
+
         //считываем граф из файла sparse и смотрим инфу о нем
         graph = GraphUtils.readGraph(GraphUtils.getFile("graph10_sparse.ser"));
 
         System.out.println(graph.getEdgeCount());
+
+        graph.print();
 
     }
 }
