@@ -13,5 +13,4 @@ public interface Algorithm {
     Integer getGraphCenter(AdjacentMatrixGraph graph);
 
 
-
 }

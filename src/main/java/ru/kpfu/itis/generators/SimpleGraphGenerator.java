@@ -7,9 +7,9 @@ import java.util.Random;
 
 public class SimpleGraphGenerator implements GraphGenerator {
 
-    private final static double MIN_DENSE = 0.85;
-    private final static double MAX_SPARSE = 0.80;
-    private final static double MIN_SPARSE = 0.5;
+    private final static double MIN_DENSE = 0.5;
+    private final static double MAX_SPARSE = 0.5;
+    private final static double MIN_SPARSE = 0.1;
 
     private final static double MAX_EDGE_WEIGHT = 126.6;
 
@@ -32,6 +32,8 @@ public class SimpleGraphGenerator implements GraphGenerator {
             graph = new AdjacentMatrixGraph(capacity);
         }
 
+        this.graphType = graphType;
+
         randomUtil = new RandomUtil();
         this.capacity = capacity;
     }
@@ -52,7 +54,7 @@ public class SimpleGraphGenerator implements GraphGenerator {
             desiredDense = random.nextDouble() * (MAX_SPARSE - MIN_SPARSE) + MIN_SPARSE;
         }
 
-        while (dense <= desiredDense) {
+        while (dense <= desiredDense || (graph.getCapacity()  != graph.getVertexCount())) {
 
             int s = randomUtil.nextInt(capacity);
             int e = randomUtil.nextInt(capacity);
@@ -66,6 +68,7 @@ public class SimpleGraphGenerator implements GraphGenerator {
         }
 
         if (graph.getCapacity() != graph.getVertexCount()){
+            System.out.println("null graph");
             return null;
         }
 

@@ -24,7 +24,11 @@ public class AdjacentMatrixGraph implements Serializable{
         //инициализируем бесконечностями
         for (int i = 0; i < capacity; i++) {
             for (int j = 0; j < capacity; j++) {
-                adjacentMatrix[i][j] = Double.POSITIVE_INFINITY;
+                if(i == j){
+                    adjacentMatrix[i][j] = 0d;
+                }else {
+                    adjacentMatrix[i][j] = Double.POSITIVE_INFINITY;
+                }
             }
         }
 
@@ -32,12 +36,11 @@ public class AdjacentMatrixGraph implements Serializable{
         edgeCount = 0;
     }
 
-    //вернет вам то, что нужно
     public Double[][] getAdjacentMatrix(){
         return adjacentMatrix;
     }
 
-    //вернет список смежных с вршиной vertex вершин
+    //вернет список смежных с вершиной vertex вершин
     public List<Integer> getAdjacentVertices(int vertex) {
 
         if (capacity > vertex) {
@@ -91,7 +94,7 @@ public class AdjacentMatrixGraph implements Serializable{
 
     private boolean contains(int vertex) {
         for (int i = 0; i < capacity; i++) {
-            if (adjacentMatrix[vertex][i] != Double.POSITIVE_INFINITY) {
+            if (adjacentMatrix[vertex][i] != Double.POSITIVE_INFINITY && i != vertex) {
                 return true;
             }
         }
@@ -126,7 +129,7 @@ public class AdjacentMatrixGraph implements Serializable{
 
                 System.out.printf("%10.0f", adjacentMatrix[i][j]);
             }
-            System.out.println();
+            System.out.println("\n");
         }
     }
 
