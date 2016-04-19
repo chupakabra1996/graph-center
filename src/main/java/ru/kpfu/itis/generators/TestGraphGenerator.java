@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 import static ru.kpfu.itis.utils.GraphUtils.*;
 
-public class TestGraphGenerator implements GraphGenerator {
+public class TestGraphGenerator {
 
     private AdjacentMatrixGraph graph;
     private GraphType graphType;
@@ -16,16 +16,18 @@ public class TestGraphGenerator implements GraphGenerator {
 
     private RandomUtil randomUtil;
 
-    private ArrayList<Integer> vertexes;
+    private ArrayList<Integer> usedVertexes;
+    private ArrayList<Integer> notUsedVertexes;
 
     public TestGraphGenerator(int capacity, GraphType graphType) {
 
         graph = new AdjacentMatrixGraph(capacity);
 
-        vertexes = new ArrayList<>(capacity);
+        usedVertexes = new ArrayList<>(capacity);
+        notUsedVertexes = new ArrayList<>(capacity);
 
-        for (Integer i = 0; i < capacity; i++) {
-            vertexes.add(i);
+        for (int i = 0; i < capacity; i++) {
+            notUsedVertexes.add(i);
         }
 
         this.graphType = graphType;
@@ -34,61 +36,72 @@ public class TestGraphGenerator implements GraphGenerator {
     }
 
 
-    @Override
     public AdjacentMatrixGraph generateGraph() {
 
-        double dense;
+        double currentDense;
 
         double desiredDense = generateDense(randomUtil.nextInt(Integer.MAX_VALUE), graphType);
 
         System.out.println("desired dense = " + desiredDense);
 
-        dense = makeCascade();
+        currentDense = makeCascade();
+
+        //for GC
+        usedVertexes = null;
+        notUsedVertexes = null;
 
         System.out.println("after preparing graph vertex count is : " + graph.getVertexCount());
-        System.out.println("after preparing graph edge count is : " + graph.getEdgeCount());
-        System.out.println("after preparing graph it's dense is : " + dense);
+        System.out.println("edge count is : " + graph.getEdgeCount());
+        System.out.println("dense is : " + currentDense);
 
-        System.out.println("\n");
+        System.out.println("==========================================================\n");
 
         System.out.println("generating...");
 
-        while (dense <= desiredDense || (graph.getVertexCount() != graph.getCapacity())) {
+        while (currentDense <= desiredDense) {
 
             if (graph.addEdge(randomUtil.nextInt(capacity), randomUtil.nextInt(capacity),
                     randomUtil.nextDouble(MAX_EDGE_WEIGHT))) {
 
-                dense = computeDense(graph.getCapacity(), graph.getEdgeCount());
+                currentDense = computeDense(capacity, graph.getEdgeCount());
             }
         }
 
-        System.out.println("\n");
+        System.out.println("==========================================================\n");
 
-        System.out.println("real dense = " + dense);
+        System.out.println("real dense = " + currentDense);
 
         System.out.println("edge count = " + graph.getEdgeCount());
 
         System.out.println("vertex count = " + graph.getVertexCount());
 
+        System.out.println("==========================================================\n");
+
         return graph;
     }
+
 
 
     private double makeCascade() {
 
         System.out.println("starting making cascade...");
 
-        double dense = 0;
+        double dense;
 
-        int firstVertex = getVertex();
+        int s = getVertexFromNotUsed();
+        int e = getVertexFromNotUsed();
 
-        while (!vertexes.isEmpty()) {
+        //at first add at least one edge
+        graph.addSimpleEdge(s, e, randomUtil.nextDouble(MAX_EDGE_WEIGHT));
+        dense = computeDense(capacity, 1);
 
-            int s = getVertex();
+        while (!notUsedVertexes.isEmpty()) {
 
-            if (graph.addSimpleEdge(firstVertex, s, randomUtil.nextDouble(MAX_EDGE_WEIGHT))) {
-                dense = computeDense(graph.getCapacity(), graph.getEdgeCount());
-                firstVertex = s;
+            s = getVertexFromUsed();
+            e = getVertexFromNotUsed();
+
+            if (graph.addSimpleEdge(s, e, randomUtil.nextDouble(MAX_EDGE_WEIGHT))) {
+                dense = computeDense(capacity, graph.getEdgeCount());
             }
         }
 
@@ -97,17 +110,26 @@ public class TestGraphGenerator implements GraphGenerator {
         return dense;
     }
 
-    private Integer getVertex() {
+    //gets vertex from used vertexes
+    private Integer getVertexFromUsed() {
 
-        int vertex = randomUtil.nextInt(vertexes.size());
-        Integer value = vertexes.get(vertex);
+        return usedVertexes.get(randomUtil.nextInt(usedVertexes.size()));
+    }
 
-        vertexes.remove(vertex);
+
+    //gets vertex from not used vertexes
+    private Integer getVertexFromNotUsed() {
+
+        int vertex = randomUtil.nextInt(notUsedVertexes.size());
+        Integer value = notUsedVertexes.get(vertex);
+
+        notUsedVertexes.remove(vertex);
+
+        usedVertexes.add(value);
 
         return value;
     }
 
-    @Override
     public void setGraphType(GraphType graphType) {
         this.graphType = graphType;
     }

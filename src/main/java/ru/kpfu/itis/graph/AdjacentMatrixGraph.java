@@ -1,9 +1,6 @@
 package ru.kpfu.itis.graph;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
 
 public class AdjacentMatrixGraph implements Serializable {
 
@@ -14,12 +11,12 @@ public class AdjacentMatrixGraph implements Serializable {
     private int vertexCount; //реальное кол-во вершин в графе, нужно чтобы генерировать граф
     private int edgeCount;  //кол-во ребер в графе
 
-    private Double[][] adjacentMatrix;  //матрица смежности
+    private double[][] adjacentMatrix;  //матрица смежности
 
     public AdjacentMatrixGraph(int capacity) {
 
         this.capacity = capacity;
-        adjacentMatrix = new Double[capacity][capacity];
+        adjacentMatrix = new double[capacity][capacity];
 
         //инициализируем бесконечностями
         for (int i = 0; i < capacity; i++) {
@@ -36,65 +33,15 @@ public class AdjacentMatrixGraph implements Serializable {
         edgeCount = 0;
     }
 
-    public Double[][] getAdjacentMatrix() {
+    public double[][] getAdjacentMatrix() {
         return adjacentMatrix;
-    }
-
-    //вернет список смежных с вершиной vertex вершин
-    public List<Integer> getAdjacentVertices(int vertex) {
-
-        if (capacity > vertex) {
-
-            ArrayList<Integer> result = new ArrayList<>();
-
-            for (int i = 0; i < capacity; i++) {
-
-                if (Double.compare(adjacentMatrix[vertex][i], Double.POSITIVE_INFINITY) != 0) {
-                    result.add(i);
-                }
-            }
-            return result;
-        }
-
-        return new ArrayList<>(0);
-    }
-
-
-    //вернет список инцидентных вершине vertex ребер
-    public List<Edge> getIncidenceEdges(int vertex) {
-
-        if (capacity > vertex) {
-
-            ArrayList<Edge> result = new ArrayList<>();
-
-            for (int i = 0; i < capacity; i++) {
-
-                if (Double.compare(adjacentMatrix[vertex][i], Double.POSITIVE_INFINITY) != 0) {
-                    result.add(new Edge(vertex, i, adjacentMatrix[vertex][i]));
-                }
-            }
-
-            return result;
-        }
-
-        return new ArrayList<>(0);
-    }
-
-
-    //вернет то же , что и выше, но в отсортированном порядке
-    public List<Edge> getSortedIncidenceEdges(int vertex) {
-
-        List<Edge> result = getIncidenceEdges(vertex);
-
-        Collections.sort(result, Edge.compareByWeight());
-
-        return result;
     }
 
 
     private boolean contains(int vertex) {
         for (int i = 0; i < capacity; i++) {
-            if (adjacentMatrix[vertex][i] != Double.POSITIVE_INFINITY && i != vertex) {
+            if (Double.compare(adjacentMatrix[vertex][i], Double.POSITIVE_INFINITY) != 0
+                    && i != vertex) {
                 return true;
             }
         }
@@ -122,7 +69,7 @@ public class AdjacentMatrixGraph implements Serializable {
                     System.out.printf("%3s", i);
                 }
 
-                if (adjacentMatrix[i][j] == Double.POSITIVE_INFINITY) {
+                if (Double.compare(adjacentMatrix[i][j], Double.POSITIVE_INFINITY) == 0) {
                     System.out.printf("%10s", "inf");
                     continue;
                 }
@@ -140,7 +87,7 @@ public class AdjacentMatrixGraph implements Serializable {
 
 
     //добаляет ребро в граф, который уже полностью связен
-    public boolean addEdge(int s, int e, Double weight) {
+    public boolean addEdge(int s, int e, double weight) {
 
         if (s == e || containsEdge(s, e)) {
             return false;

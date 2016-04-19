@@ -1,8 +1,6 @@
 package ru.kpfu.itis;
 
-import ru.kpfu.itis.generators.GraphGenerator;
 import ru.kpfu.itis.generators.TestGraphGenerator;
-import ru.kpfu.itis.graph.AdjacentMatrixGraph;
 import ru.kpfu.itis.graph.GraphType;
 import ru.kpfu.itis.utils.GraphUtils;
 
@@ -22,10 +20,16 @@ public class Main {
 
     public static void main(String[] args) {
 
-        GraphGenerator graphGenerator = new TestGraphGenerator(5000, GraphType.SPARSE);
 
-        AdjacentMatrixGraph g = graphGenerator.generateGraph();
+        TestGraphGenerator graphGenerator = new TestGraphGenerator(1000, GraphType.DENSE);
 
-        GraphUtils.writeGraph(getFileToGraph(g.getCapacity(),GraphType.SPARSE),g);
+        long sTime = System.currentTimeMillis();
+
+        graphGenerator.generateGraph();
+
+        long fTime = System.currentTimeMillis();
+
+        System.out.println((fTime-sTime)/1000);
+
     }
 }

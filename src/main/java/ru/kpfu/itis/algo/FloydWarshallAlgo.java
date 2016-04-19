@@ -4,14 +4,14 @@ import ru.kpfu.itis.graph.AdjacentMatrixGraph;
 
 public class FloydWarshallAlgo implements Algorithm {
 
-    private Double[][] d;
+    private double[][] d;
 
     public FloydWarshallAlgo(AdjacentMatrixGraph graph) {
         d = graph.getAdjacentMatrix();
     }
 
     @Override
-    public Integer getGraphCenter(AdjacentMatrixGraph graph) {
+    public int getGraphCenter(AdjacentMatrixGraph graph) {
 
         int n = d.length;
 
@@ -29,13 +29,13 @@ public class FloydWarshallAlgo implements Algorithm {
     }
 
 
-    private Integer getIndexOfMinValueAmongMaxValues(Double[][] values) {
+    private int getIndexOfMinValueAmongMaxValues(double[][] values) {
 
-        Integer vertex = 0;
-        Double minPathCost = Double.POSITIVE_INFINITY;
+        int vertex = 0;
+        double minPathCost = Double.POSITIVE_INFINITY;
 
         for (int i = 0; i < values.length; i++) {
-            Double rowMax = getMaxValue(values[i]);
+            double rowMax = getMaxValue(values[i]);
             if (Double.compare(minPathCost, rowMax) > 0) {
                 minPathCost = rowMax;
                 vertex = i;
@@ -46,10 +46,10 @@ public class FloydWarshallAlgo implements Algorithm {
     }
 
 
-    private Double getMaxValue(Double[] values) {
-        Double res = -1d;
+    private double getMaxValue(double[] values) {
+        double res = -1d;
 
-        for (Double value : values) {
+        for (double value : values) {
             res = Math.max(res, value);
         }
 
