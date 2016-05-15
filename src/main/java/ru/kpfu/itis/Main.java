@@ -21,7 +21,7 @@ public class Main {
     public static void main(String[] args) {
 
 
-        TestGraphGenerator graphGenerator = new TestGraphGenerator(1000, GraphType.DENSE);
+        TestGraphGenerator graphGenerator = new TestGraphGenerator(1500, GraphType.DENSE);
 
         long sTime = System.currentTimeMillis();
 
