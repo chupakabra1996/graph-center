@@ -9,7 +9,7 @@ import java.io.File;
 public class Main {
 
 
-    private static File getFileToGraph(int capacity, GraphType graphType) {
+    private static File graphToFile(int capacity, GraphType graphType) {
         String extension = ".ser";
         String type = graphType == GraphType.DENSE ? "" : "_sparse";
 
@@ -29,7 +29,7 @@ public class Main {
 
         long fTime = System.currentTimeMillis();
 
-        System.out.println((fTime-sTime)/1000);
+        System.out.println((fTime - sTime) / 1000);
 
     }
 }

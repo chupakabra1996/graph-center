@@ -1,13 +1,5 @@
-# graph-center
-  <strong>Finding  graph's center algo</strong>
-#Contributors
-  <hr>
-  1) Зиннатов Айнур<br>
+# Floyd-Warshall Graph Center Finder
   
-  2) Хусаенов Ильгиз<br>
-  
-  3) Сабанов Владислав<br>
-  
-  4) Сафин Рамиль
-  <hr>
-  
+Graph center finding algorithm implementation.
+
+Dense and/or sparse graphs with the predefined densities are generated for the algorithm's input.
